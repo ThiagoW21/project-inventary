@@ -1,7 +1,7 @@
 <script setup>
 import { Form } from "vee-validate";
 import * as Yup from "yup";
-import TextInput from "../components/TextInput.vue";
+import TextInput from "./TextInput.vue";
 
 function onSubmit(values) {
   alert(JSON.stringify(values, null, 2));
