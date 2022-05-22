@@ -1,16 +1,39 @@
+import axios from "axios";
 import { createStore } from "vuex";
 
 const store = createStore({
-  state: {},
-  getters: {},
+  state: {
+    users: [],
+  },
+  getters: {
+    authLogin: (state) => (payload) => {
+      const inUsers = state.users.some(
+        ({ email, password }) =>
+          email === payload.email && password === payload.password
+      );
+      return inUsers;
+    },
+  },
   mutations: {
-    submit() {
-      console.log("a")
+    addUser(state, payload) {
+      delete payload["confirm_password"];
+      payload["id"] = state.users.length;
+      axios
+        .post("http://v1-inventary.herokuapp.com/users/", payload)
+        .then((res) => (state.users = [...state.users, res.data]));
+    },
+    async getUsers(state) {
+      axios
+        .get("http://v1-inventary.herokuapp.com/users/")
+        .then((res) => (state.users = res.data));
     },
   },
   actions: {
-    submit({ commit }) {
-      commit("submit");
+    addUser({ commit }, payload) {
+      commit("addUser", payload);
+    },
+    getUsers({ commit }) {
+      commit("getUsers");
     },
   },
 });

@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import TextInput from "./TextInput.vue";
 
 const schema = Yup.object().shape({
-  name: Yup.string().required("Nome é um campo obrigatório"),
+  username: Yup.string().required("Nome é um campo obrigatório"),
   email: Yup.string()
     .email("Email inválido")
     .required("Email é um campo obrigatório"),
@@ -19,12 +19,16 @@ const schema = Yup.object().shape({
 });
 
 const store = useStore();
+function onSubmit(values) {
+  console.log(values);
+  store.dispatch("addUser", values);
+}
 </script>
 
 <template>
-  <Form @submit="store.dispatch('addUser')" :validation-schema="schema">
+  <Form @submit="onSubmit" :validation-schema="schema">
     <TextInput
-      name="name"
+      name="username"
       type="text"
       label="Nome completo"
       placeholder="Seu nome"
