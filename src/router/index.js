@@ -3,9 +3,9 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/cadastro",
-      name: "cadastro",
-      component: () => import("../views/CadastroView.vue"),
+      path: "/",
+      name: "login",
+      component: () => import("../views/LoginView.vue"),
     },
   ],
 });
