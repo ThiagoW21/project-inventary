@@ -1,5 +1,6 @@
 import { BootstrapVue3 } from "bootstrap-vue-3";
 import "bootstrap/dist/css/bootstrap.css";
+import "mdb-vue-ui-kit/css/mdb.min.css";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";

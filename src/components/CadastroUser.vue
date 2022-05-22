@@ -1,12 +1,9 @@
 <script setup>
+import { MDBBtn, MDBModalFooter } from "mdb-vue-ui-kit";
 import { Form } from "vee-validate";
+import { useStore } from "vuex";
 import * as Yup from "yup";
 import TextInput from "./TextInput.vue";
-
-function onSubmit(values) {
-  document.addEventListener("bvModalEvent", () => console.log("2"));
-  alert(JSON.stringify(values, null, 2));
-}
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Nome é um campo obrigatório"),
@@ -20,10 +17,12 @@ const schema = Yup.object().shape({
     .required("Confirmar a senha é um campo obrigatório")
     .oneOf([Yup.ref("password")], "As senhas não coincidem"),
 });
+
+const store = useStore();
 </script>
 
-<template v-slot:modal-footer="{ ok }">
-  <Form @submit="onSubmit" :validation-schema="schema">
+<template>
+  <Form @submit="store.dispatch('addUser')" :validation-schema="schema">
     <TextInput
       name="name"
       type="text"
@@ -48,6 +47,13 @@ const schema = Yup.object().shape({
       label="Confirmar senha"
       placeholder="Digite novamente"
     />
-    <b-button type="submit" variant="primary">Cadastrar</b-button>
+    <MDBModalFooter>
+      <MDBBtn
+        tag="input"
+        color="primary"
+        type="submit"
+        value="Cadastrar"
+      ></MDBBtn>
+    </MDBModalFooter>
   </Form>
 </template>
