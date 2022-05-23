@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from "@vue/reactivity";
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import * as Yup from "yup";
@@ -19,10 +20,11 @@ const schema = Yup.object().shape({
 });
 
 const store = useStore();
+const emailRegistered = computed(() => store.getters.emailRegistered);
 
 async function onSubmit(values) {
   await store.dispatch("addUser", values);
-  if (!store.getters.emailRegistered()) {
+  if (!emailRegistered) {
     emit("show-modal");
     return;
   }
@@ -62,7 +64,7 @@ async function onSubmit(values) {
       <slot name="footer"></slot>
     </div>
   </Form>
-  <b-alert :show="store.getters.emailRegistered()" dismissible variant="danger">
+  <b-alert :show="emailRegistered" dismissible variant="danger">
     Email já registrado.
   </b-alert>
 </template>

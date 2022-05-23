@@ -6,30 +6,25 @@ const store = createStore({
     users: [],
     emailRegistered: false,
     isLoading: false,
+    inUsers: false,
   },
   getters: {
-    authLogin: (state) => (payload) => {
-      const inUsers = state.users.some(
-        ({ email, password }) =>
-          email === payload.email && password === payload.password
-      );
-      return inUsers;
-    },
-    isLoading: (state) => () => {
+    isLoading(state) {
       return state.isLoading;
     },
-    emailRegistered: (state) => () => {
+    emailRegistered(state) {
       return state.emailRegistered;
+    },
+    inUsers(state) {
+      return state.inUsers;
     },
   },
   mutations: {
     ADD_USER(state, payload) {
       state.users = [...state.users, payload];
     },
-    async GET_USERS(state) {
-      axios
-        .get("http://v1-inventary.herokuapp.com/users/")
-        .then((res) => (state.users = res.data));
+    async GET_USERS(state, payload) {
+      state.users = payload;
     },
     EMAIL_REGISTERED(state) {
       state.emailRegistered = true;
@@ -39,6 +34,9 @@ const store = createStore({
     },
     SET_LOADING(state) {
       state.isLoading = !state.isLoading;
+    },
+    SET_IN_USERS(state) {
+      state.inUsers = !state.inUsers;
     },
   },
   actions: {
@@ -53,8 +51,20 @@ const store = createStore({
         .catch(() => commit("EMAIL_REGISTERED"));
       commit("SET_LOADING");
     },
+    authLogin({ commit, state }, payload) {
+      const inUsers = state.users.some(
+        ({ email, password }) =>
+          email === payload.email && password === payload.password
+      );
+      if (!inUsers && commit("SET_IN_USERS"));
+    },
+    setInUsers({ commit }) {
+      commit("SET_IN_USERS");
+    },
     getUsers({ commit }) {
-      commit("GET_USERS");
+      axios
+        .get("http://v1-inventary.herokuapp.com/users/")
+        .then((res) => commit("GET_USERS", res.data));
     },
     removeAlert({ commit }) {
       commit("EMAIL_UNREGISTERED");
