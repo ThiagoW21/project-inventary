@@ -16,6 +16,7 @@
     "vee-validate": "^4.5.11",
     "vue": "^3.2.35",
     "vue-axios": "^3.4.1",
+    "vue-m-dialog": "^3.0.0",
     "vue-router": "^4.0.14",
     "vue3-gravatar": "^3.0.0",
     "vuex": "^4.0.2",

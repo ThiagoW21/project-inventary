@@ -1,9 +1,20 @@
 <script setup>
 import { RouterView } from "vue-router";
-</script>
+import { useStore } from "vuex";
 
+const store = useStore();
+</script>
 <template>
-  <RouterView />
+  <b-overlay :show="store.getters.isLoading()" rounded="sm">
+    <RouterView />
+  </b-overlay>
 </template>
 
-<style></style>
+<style>
+body,
+html,
+#app {
+  height: 100%;
+  width: 100%;
+}
+</style>

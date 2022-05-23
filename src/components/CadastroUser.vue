@@ -1,9 +1,9 @@
 <script setup>
-import { MDBBtn, MDBModalFooter } from "mdb-vue-ui-kit";
 import { Form } from "vee-validate";
 import { useStore } from "vuex";
 import * as Yup from "yup";
 import TextInput from "./TextInput.vue";
+const emit = defineEmits(["showModal"]);
 
 const schema = Yup.object().shape({
   username: Yup.string().required("Nome é um campo obrigatório"),
@@ -19,9 +19,16 @@ const schema = Yup.object().shape({
 });
 
 const store = useStore();
-function onSubmit(values) {
-  console.log(values);
-  store.dispatch("addUser", values);
+
+async function onSubmit(values) {
+  await store.dispatch("addUser", values);
+  if (!store.getters.emailRegistered()) {
+    emit("show-modal");
+    return;
+  }
+  setTimeout(() => {
+    store.dispatch("removeAlert");
+  }, 3000);
 }
 </script>
 
@@ -51,13 +58,11 @@ function onSubmit(values) {
       label="Confirmar senha"
       placeholder="Digite novamente"
     />
-    <MDBModalFooter>
-      <MDBBtn
-        tag="input"
-        color="primary"
-        type="submit"
-        value="Cadastrar"
-      ></MDBBtn>
-    </MDBModalFooter>
+    <div class="m-dialog--footer">
+      <slot name="footer"></slot>
+    </div>
   </Form>
+  <b-alert :show="store.getters.emailRegistered()" dismissible variant="danger">
+    Email já registrado.
+  </b-alert>
 </template>
