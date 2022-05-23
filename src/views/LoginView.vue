@@ -28,6 +28,8 @@ function onSubmit(values) {
   !inUsers.value && store.dispatch("authLogin", values);
 }
 
+const showModalWarning = ref(false);
+
 watch(inUsers, () => {
   if (inUsers.value) {
     setTimeout(() => store.dispatch("setInUsers"), 1200);
@@ -61,7 +63,10 @@ watch(inUsers, () => {
         <b-button @click="showModal = true" variant="link"
           >Cadastre-se</b-button
         >
-        <b-button variant="secundary" :disabled="isLoading" type="button"
+        <b-button
+          variant="secundary"
+          type="button"
+          @click="showModalWarning = true"
           ><img src="https://img.icons8.com/color/16/000000/google-logo.png" />
           Entrar com o google</b-button
         >
@@ -88,6 +93,17 @@ watch(inUsers, () => {
         </b-overlay>
       </template>
     </CadastroUser>
+  </m-dialog>
+  <m-dialog v-model="showModalWarning" title="Oops...">
+    <p>Função em desenvolvimento.</p>
+    <template v-slot:footer>
+      <b-button
+        variant="primary"
+        @click="showModalWarning = false"
+        type="submit"
+        >Ok</b-button
+      >
+    </template>
   </m-dialog>
 </template>
 <style>
