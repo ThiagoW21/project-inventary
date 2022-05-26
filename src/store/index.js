@@ -51,7 +51,10 @@ const store = createStore({
       commit("SET_LOADING");
       axios
         .post("http://inventary-v1.herokuapp.com/token", payload)
-        .then((res) => commit("LOGGED_USER", res.data))
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          commit("LOGGED_USER", res.data);
+        })
         .catch(() => commit("SET_IN_USERS"));
       commit("SET_LOADING");
     },

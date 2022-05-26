@@ -8,19 +8,33 @@ const router = createRouter({
       name: "login",
       component: () => import("../views/LoginView.vue"),
     },
+    {
+      path: "/home",
+      name: "home",
+      component: () => import("../views/HomeView.vue"),
+    },
   ],
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to) => {
   const token = JSON.parse(localStorage.getItem("user"));
-  axios
-    .get("https://inventary-v1.herokuapp.com/me", {
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      },
-    })
-    .then(() => alert("Deu bom"))
-    .catch((err) => alert(err));
+  const url = "http://inventary-v1.herokuapp.com/me";
+
+  if (token) {
+    const config = {
+      headers: { Authorization: "Bearer " + token.access_token },
+    };
+
+    const isAuth = await axios.get(url, config).catch(() => {
+      return false;
+    });
+
+    if (!isAuth && to.name !== "login") {
+      return { name: "login" };
+    }
+  } else if (to.name !== "login") {
+    return { name: "login" };
+  }
 });
 
 export default router;
