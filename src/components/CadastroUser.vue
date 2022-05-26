@@ -1,10 +1,10 @@
 <script setup>
-import { computed } from "@vue/reactivity";
 import { Form } from "vee-validate";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import * as Yup from "yup";
 import TextInput from "./TextInput.vue";
-const emit = defineEmits(["showModal"]);
+const emit = defineEmits(["show-modal"]);
 
 const schema = Yup.object().shape({
   username: Yup.string().required("Nome é um campo obrigatório"),
@@ -22,12 +22,14 @@ const schema = Yup.object().shape({
 const store = useStore();
 const emailRegistered = computed(() => store.getters.emailRegistered);
 
-async function onSubmit(values) {
+async function onSubmit(values, { resetForm }) {
   await store.dispatch("addUser", values);
-  if (!emailRegistered) {
+
+  if (!emailRegistered.value) {
     emit("show-modal");
     return;
   }
+  resetForm();
   setTimeout(() => {
     store.dispatch("removeAlert");
   }, 3000);

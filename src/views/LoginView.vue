@@ -1,16 +1,12 @@
 <script setup>
 import { Form } from "vee-validate";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import * as Yup from "yup";
 import CadastroUser from "../components/CadastroUser.vue";
 import TextInput from "../components/TextInput.vue";
 
 const store = useStore();
-
-onMounted(() => {
-  store.dispatch("getUsers");
-});
 
 const showModal = ref(false);
 
@@ -24,8 +20,9 @@ const schema = Yup.object().shape({
 const isLoading = computed(() => store.getters.isLoading);
 const inUsers = computed(() => store.getters.inUsers);
 
-function onSubmit(values) {
+function onSubmit(values, { resetForm }) {
   !inUsers.value && store.dispatch("authLogin", values);
+  resetForm();
 }
 
 const showModalWarning = ref(false);
@@ -37,6 +34,7 @@ watch(inUsers, () => {
 });
 </script>
 <template>
+  <div class="bg-image"></div>
   <div id="login-container">
     <Transition name="slide-fade">
       <div v-if="inUsers" id="alert">
@@ -59,7 +57,15 @@ watch(inUsers, () => {
         />
       </div>
       <div id="buttons-container">
-        <b-button type="submit" variant="primary">Entrar</b-button>
+        <b-overlay
+          :show="isLoading"
+          rounded
+          opacity="0.6"
+          spinner-small
+          spinner-variant="primary"
+          class="d-inline-block"
+          ><b-button type="submit" variant="primary">Entrar</b-button>
+        </b-overlay>
         <b-button @click="showModal = true" variant="link"
           >Cadastre-se</b-button
         >
@@ -74,7 +80,7 @@ watch(inUsers, () => {
     </Form>
   </div>
   <m-dialog v-model="showModal" title="Registre-se">
-    <CadastroUser @show-modal="showModal = false">
+    <CadastroUser @show-modal="() => (showModal = false)">
       <template v-slot:footer>
         <b-button variant="secundary" @click="showModal = false">
           Cancelar
@@ -107,8 +113,9 @@ watch(inUsers, () => {
   </m-dialog>
 </template>
 <style>
-body {
-  background-color: blue;
+body,
+html {
+  width: 100%;
 }
 
 .modal-content {
@@ -126,12 +133,18 @@ body {
 }
 
 #login-container {
-  width: 100%;
-  height: 100vh;
-  background-color: rgb(17, 17, 17);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 0 1em rgb(175, 170, 255);
+}
+
+@media only screen and (max-width: 600px) {
+  #login-container form {
+    max-width: 350px;
+  }
 }
 
 #login-container form {
@@ -153,10 +166,12 @@ body {
 #buttons-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-#buttons-container button {
-  margin: 10px;
+#buttons-container button,
+#buttons-container .b-overlay-wrap {
+  width: 100%;
 }
 
 img {
@@ -179,6 +194,17 @@ img {
 
 #alert {
   position: absolute;
-  top: 5%;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.bg-image {
+  background-image: url(../assets/background-image.png);
+  filter: blur(8px);
+  -webkit-filter: blur(20px);
+  height: 100vh;
+  width: 100%;
 }
 </style>
