@@ -4,6 +4,13 @@ import NavBar from "../components/NavBar.vue";
 </script>
 <template>
   <NavBar />
-  <SystemStatistics />
+  <div id="view-container">
+    <SystemStatistics />
+  </div>
 </template>
-<style></style>
+<style>
+#view-container {
+  overflow: auto;
+  height: 100vh;
+}
+</style>

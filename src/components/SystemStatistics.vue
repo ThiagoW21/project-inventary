@@ -47,6 +47,7 @@ const borrowedItems = computed(() => store.getters.borrowedItems.length);
         <h2>Empréstimos</h2>
       </div>
     </div>
+    <div id="teste"></div>
   </div>
 </template>
 <style>
