@@ -7,6 +7,7 @@ const store = createStore({
     emailRegistered: false,
     isLoading: false,
     inUsers: false,
+    router: "/",
   },
   getters: {
     isLoading(state) {
@@ -17,6 +18,9 @@ const store = createStore({
     },
     inUsers(state) {
       return state.inUsers;
+    },
+    router(state) {
+      return state.router;
     },
   },
   mutations: {
@@ -34,6 +38,9 @@ const store = createStore({
     },
     SET_IN_USERS(state) {
       state.inUsers = !state.inUsers;
+    },
+    UPDATE_ROUTER(state, payload) {
+      state.router = payload;
     },
   },
   actions: {
@@ -54,6 +61,7 @@ const store = createStore({
         .then((res) => {
           localStorage.setItem("user", JSON.stringify(res.data));
           commit("LOGGED_USER", res.data);
+          commit("UPDATE_ROUTER", "inventario");
         })
         .catch(() => commit("SET_IN_USERS"));
       commit("SET_LOADING");
