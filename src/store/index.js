@@ -22,6 +22,9 @@ const store = createStore({
     router(state) {
       return state.router;
     },
+    loggerUser(state) {
+      return state.user;
+    },
   },
   mutations: {
     LOGGED_USER(state, payload) {
@@ -71,6 +74,9 @@ const store = createStore({
     },
     removeAlert({ commit }) {
       commit("EMAIL_UNREGISTERED");
+    },
+    setUser({ commit }, payload) {
+      commit("LOGGED_USER", payload);
     },
   },
 });

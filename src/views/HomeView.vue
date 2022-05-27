@@ -1,51 +1,12 @@
 <script setup>
-import { ref } from "vue";
-
-const minimized = ref(false);
-
-const items = [
-  { title: "Dashboard", icon: "dashboard" },
-  { title: "Sidebar demo", icon: "room", active: true },
-  { title: "Loop", icon: "loop" },
-];
+import SideBar from "../components/SideBar.vue";
+import NavBar from "../components/NavBar.vue";
 </script>
 <template>
   <div class="demo-content">
-    <va-sidebar
-      :minimized="minimized"
-      textColor="dark"
-      width="11rem"
-      minimizedWidth="64px"
-    >
-      <va-checkbox v-model="minimized" label="Minimized" />
-      <template v-for="item in items" :key="item.to">
-        <va-sidebar-item :active="item.active">
-          <va-sidebar-item-content>
-            <va-icon :name="item.icon" />
-            <va-sidebar-item-title v-if="!minimized" style="height: 24px">
-              {{ item.title }}
-            </va-sidebar-item-title>
-          </va-sidebar-item-content>
-        </va-sidebar-item>
-      </template>
-    </va-sidebar>
-    <va-navbar>
-      <template #left>
-        <va-navbar-item>Left</va-navbar-item>
-      </template>
-      <template #center>
-        <va-navbar-item>Center</va-navbar-item>
-      </template>
-      <template #right>
-        <va-navbar-item>Right</va-navbar-item>
-      </template>
-    </va-navbar>
+    <SideBar />
+    <NavBar />
   </div>
-
-  <div
-    class="demo-controls px-2 py-2"
-    style="background: var(--va-background); width: 100%"
-  ></div>
 </template>
 <style>
 html,
