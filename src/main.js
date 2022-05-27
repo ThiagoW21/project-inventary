@@ -10,6 +10,10 @@ import store from "./store";
 import { createVuestic } from "vuestic-ui";
 import "vuestic-ui/dist/vuestic-ui.css";
 import VueGravatar from "vue3-gravatar";
+import PrimeVue from "primevue/config";
+import "primevue/resources/themes/saga-blue/theme.css";
+import "primevue/resources/primevue.min.css";
+import "primeicons/primeicons.css";
 
 const app = createApp(App);
 
@@ -19,5 +23,6 @@ app.use(BootstrapVue3);
 app.use(MDialogPlugin);
 app.use(createVuestic());
 app.use(VueGravatar);
+app.use(PrimeVue);
 
 app.mount("#app");

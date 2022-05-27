@@ -74,6 +74,7 @@ h2 {
 
 h1 {
   margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .value-container h1 {
