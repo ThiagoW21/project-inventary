@@ -1,11 +1,13 @@
 <script setup>
 import SideBar from "../components/SideBar.vue";
-import NavBar from "../components/NavBar.vue";
+import { RouterView } from "vue-router";
 </script>
 <template>
   <div class="demo-content">
     <SideBar />
-    <NavBar />
+    <div class="view-content">
+      <RouterView />
+    </div>
   </div>
 </template>
 <style>
@@ -24,7 +26,10 @@ body {
 .demo-content {
   display: flex;
   width: 100%;
-  flex-grow: 4;
+}
+
+.view-content {
+  width: 100%;
 }
 
 .va-navbar {

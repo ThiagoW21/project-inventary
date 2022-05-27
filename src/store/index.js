@@ -8,6 +8,10 @@ const store = createStore({
     isLoading: false,
     inUsers: false,
     router: "/",
+    contributors: [],
+    totalProducts: 0,
+    items: [],
+    borrowedItems: [],
   },
   getters: {
     isLoading(state) {
@@ -24,6 +28,18 @@ const store = createStore({
     },
     loggerUser(state) {
       return state.user;
+    },
+    contribuitors(state) {
+      return state.contributors;
+    },
+    totalProducts(state) {
+      return state.totalProducts;
+    },
+    items(state) {
+      return state.items;
+    },
+    borrowedItems(state) {
+      return state.borrowedItems;
     },
   },
   mutations: {

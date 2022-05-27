@@ -29,4 +29,8 @@ const loggerUser = computed(() => store.getters.loggerUser);
   border-radius: 50%;
   overflow: hidden;
 }
+
+.va-navbar {
+  margin-bottom: 10px;
+}
 </style>
