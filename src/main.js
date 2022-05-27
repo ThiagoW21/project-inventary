@@ -7,8 +7,9 @@ import "vue-m-dialog/dist/style.css";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { createVuestic } from "vuestic-ui"; // <-
-import "vuestic-ui/dist/vuestic-ui.css"; // <-
+import { createVuestic } from "vuestic-ui";
+import "vuestic-ui/dist/vuestic-ui.css";
+import VueGravatar from "vue3-gravatar";
 
 const app = createApp(App);
 
@@ -17,5 +18,6 @@ app.use(store);
 app.use(BootstrapVue3);
 app.use(MDialogPlugin);
 app.use(createVuestic());
+app.use(VueGravatar);
 
 app.mount("#app");
