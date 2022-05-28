@@ -10,45 +10,43 @@ const items = computed(() => store.getters.items.length);
 const borrowedItems = computed(() => store.getters.borrowedItems.length);
 </script>
 <template>
-  <div class="container">
-    <h1>Estatísticas do sistema</h1>
-    <div class="card-container">
-      <div class="card">
-        <div class="value-container">
-          <va-icon name="person" size="4rem" :rotation="0" class="mr-3" />
-          <h1>{{ contribuitors }}</h1>
-        </div>
-        <h2>Colaboradores</h2>
+  <h1>Estatísticas do sistema</h1>
+  <div class="card-container">
+    <div class="card">
+      <div class="value-container">
+        <va-icon name="person" size="4rem" :rotation="0" class="mr-3" />
+        <h1>{{ contribuitors }}</h1>
       </div>
-      <div class="card">
-        <div class="value-container">
-          <va-icon name="widgets" size="4rem" :rotation="0" class="mr-3" />
-          <h1>{{ items }}</h1>
-        </div>
-        <h2>Items</h2>
-      </div>
-      <div class="card">
-        <div class="value-container">
-          <va-icon name="paid" size="4rem" :rotation="0" class="mr-3" />
-          <h1>{{ totalProducts }}</h1>
-        </div>
-        <h2>Valor em produtos</h2>
-      </div>
-      <div class="card">
-        <div class="value-container">
-          <va-icon
-            name="real_estate_agent"
-            size="4rem"
-            :rotation="0"
-            class="mr-3"
-          />
-          <h1>{{ borrowedItems }}</h1>
-        </div>
-        <h2>Empréstimos</h2>
-      </div>
+      <h2>Colaboradores</h2>
     </div>
-    <div id="teste"></div>
+    <div class="card">
+      <div class="value-container">
+        <va-icon name="widgets" size="4rem" :rotation="0" class="mr-3" />
+        <h1>{{ items }}</h1>
+      </div>
+      <h2>Items</h2>
+    </div>
+    <div class="card">
+      <div class="value-container">
+        <va-icon name="paid" size="4rem" :rotation="0" class="mr-3" />
+        <h1>{{ totalProducts }}</h1>
+      </div>
+      <h2>Valor em produtos</h2>
+    </div>
+    <div class="card">
+      <div class="value-container">
+        <va-icon
+          name="real_estate_agent"
+          size="4rem"
+          :rotation="0"
+          class="mr-3"
+        />
+        <h1>{{ borrowedItems }}</h1>
+      </div>
+      <h2>Empréstimos</h2>
+    </div>
   </div>
+  <div id="teste"></div>
 </template>
 <style>
 h2 {
@@ -91,7 +89,7 @@ h1 {
   display: flex;
   width: 200px;
   height: 130px;
-  margin-right: 20px;
+  margin: 20px;
   flex-grow: 4;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;

@@ -61,6 +61,9 @@ const store = createStore({
     UPDATE_ROUTER(state, payload) {
       state.router = payload;
     },
+    ADD_ITENS(state, payload) {
+      state.items = payload;
+    },
   },
   actions: {
     async addUser({ commit }, payload) {
@@ -75,7 +78,7 @@ const store = createStore({
     },
     async authLogin({ commit }, payload) {
       commit("SET_LOADING");
-      axios
+      await axios
         .post("http://inventary-v1.herokuapp.com/token", payload)
         .then((res) => {
           localStorage.setItem("user", JSON.stringify(res.data));
@@ -93,6 +96,12 @@ const store = createStore({
     },
     setUser({ commit }, payload) {
       commit("LOGGED_USER", payload);
+    },
+    async getItens({ commit }) {
+      commit("SET_LOADING");
+      const url = "http://inventary-v1.herokuapp.com/items";
+      await axios.get(url).then((res) => commit("ADD_ITENS", res.data));
+      commit("SET_LOADING");
     },
   },
 });
