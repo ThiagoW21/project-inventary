@@ -30,7 +30,7 @@ function handleClick() {
           <Button
             :label="!minimized && 'Inventário'"
             class="p-button-outlined p-button-secondary"
-            icon="pi pi-plus"
+            icon="pi pi-box"
           />
         </RouterLink>
         <Button

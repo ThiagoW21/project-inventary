@@ -6,6 +6,7 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import NavBar from "../components/NavBar.vue";
 import SystemStatistics from "../components/SystemStatistics.vue";
+import CardItem from "../components/CardItem.vue";
 
 const store = useStore();
 const items = computed(() => store.getters.items);
@@ -28,6 +29,10 @@ function handleClick() {
   filterActive.value = !filterActive.value;
   inputValue.value = "";
   selectedFilter.value = "";
+}
+
+function showDetail(item) {
+  console.log(item);
 }
 
 onMounted(() => {
@@ -64,20 +69,15 @@ onMounted(() => {
         />
       </div>
       <div id="itens-container">
-        <div v-for="item in items" :key="item.id" class="card">
-          <img :src="item.url_image" />
-          <h3>{{ item.description }}</h3>
-          <div class="brand-model-container">
-            <p>{{ item.brand }}</p>
-            <h1>{{ item.model }}</h1>
-          </div>
-          <div
-            class="status"
-            :class="{ borrowed: item.borrowed_to !== 'Na empresa' }"
-          >
-            {{ item.borrowed_to }}
-          </div>
-        </div>
+        <CardItem
+          v-for="item in items"
+          :key="item.id"
+          :url="item.url_image"
+          :description="item.description"
+          :brand="item.brand"
+          :model="item.model"
+          :borrowed_to="item.borrowed_to"
+        />
       </div>
     </div>
   </div>
