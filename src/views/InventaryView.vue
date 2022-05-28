@@ -1,13 +1,34 @@
 <script setup>
 import Button from "primevue/button";
+import Dropdown from "primevue/dropdown";
 import InputText from "primevue/inputtext";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import NavBar from "../components/NavBar.vue";
 import SystemStatistics from "../components/SystemStatistics.vue";
 
 const store = useStore();
 const items = computed(() => store.getters.items);
+const filters = ref([
+  { name: "Nome", key: "name" },
+  { name: "Marca", key: "brand" },
+  { name: "Modelo", key: "model" },
+  { name: "Descrição", key: "description" },
+]);
+
+const selectedFilter = ref("");
+const inputValue = ref("");
+const filterActive = ref(false);
+
+function handleClick() {
+  store.dispatch(filterActive.value ? "removeFilter" : "filterItems", {
+    key: selectedFilter.value,
+    value: inputValue.value,
+  });
+  filterActive.value = !filterActive.value;
+  inputValue.value = "";
+  selectedFilter.value = "";
+}
 
 onMounted(() => {
   store.dispatch("getItens");
@@ -19,8 +40,28 @@ onMounted(() => {
     <div class="container">
       <SystemStatistics />
       <div id="search-container">
-        <InputText placeholder="Buscar" />
-        <Button type="button" label="Search" icon="pi pi-search" />
+        <InputText placeholder="Buscar item" v-model="inputValue" />
+        <Dropdown
+          v-model="selectedFilter"
+          :options="filters"
+          placeholder="Selecione um filtro"
+          optionLabel="name"
+          optionValue="key"
+        />
+        <Button
+          v-if="filterActive"
+          label="Remover filtro"
+          icon="pi pi-trash"
+          class="p-button-danger"
+          @click="handleClick"
+        />
+        <Button
+          v-else
+          type="button"
+          label="Buscar"
+          icon="pi pi-search"
+          @click="handleClick"
+        />
       </div>
       <div id="itens-container">
         <div v-for="item in items" :key="item.id" class="card">
@@ -116,5 +157,10 @@ onMounted(() => {
   display: flex;
   flex-grow: 4;
   margin-right: 20px;
+}
+
+.p-dropdown {
+  margin-right: 20px;
+  width: 200px;
 }
 </style>

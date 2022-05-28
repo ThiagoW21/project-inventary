@@ -11,6 +11,7 @@ const store = createStore({
     contributors: [],
     totalProducts: 0,
     items: [],
+    backupItems: [],
     borrowedItems: [],
   },
   getters: {
@@ -61,8 +62,14 @@ const store = createStore({
     UPDATE_ROUTER(state, payload) {
       state.router = payload;
     },
-    ADD_ITENS(state, payload) {
+    ADD_ITEMS(state, payload) {
       state.items = payload;
+    },
+    SET_BACKUP(state, payload) {
+      state.backupItems = payload;
+    },
+    REMOVE_FILTER(state) {
+      state.items = state.backupItems;
     },
   },
   actions: {
@@ -100,8 +107,20 @@ const store = createStore({
     async getItens({ commit }) {
       commit("SET_LOADING");
       const url = "http://inventary-v1.herokuapp.com/items";
-      await axios.get(url).then((res) => commit("ADD_ITENS", res.data));
+      await axios.get(url).then((res) => {
+        commit("ADD_ITEMS", res.data);
+        commit("SET_BACKUP", res.data);
+      });
       commit("SET_LOADING");
+    },
+    filterItems({ commit, state }, { key, value }) {
+      const itemsFiltered = state.items.filter((item) =>
+        item[key].toLowerCase().includes(value.toLowerCase())
+      );
+      commit("ADD_ITEMS", itemsFiltered);
+    },
+    removeFilter({ commit }) {
+      commit("REMOVE_FILTER");
     },
   },
 });
