@@ -1,12 +1,13 @@
 <script setup>
 import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import InputText from "primevue/inputtext";
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
+import CardItem from "../components/CardItem.vue";
 import NavBar from "../components/NavBar.vue";
 import SystemStatistics from "../components/SystemStatistics.vue";
-import CardItem from "../components/CardItem.vue";
 
 const store = useStore();
 const items = computed(() => store.getters.items);
@@ -31,8 +32,12 @@ function handleClick() {
   selectedFilter.value = "";
 }
 
+const showModal = ref(false);
+const itemDetail = ref();
+
 function showDetail(item) {
-  console.log(item);
+  itemDetail.value = item;
+  showModal.value = true;
 }
 
 onMounted(() => {
@@ -77,9 +82,61 @@ onMounted(() => {
           :brand="item.brand"
           :model="item.model"
           :borrowed_to="item.borrowed_to"
+          @show-detail="showDetail(item)"
         />
       </div>
     </div>
+    <Dialog
+      header="Detalhes"
+      v-model:visible="showModal"
+      :breakpoints="{ '960px': '75vw' }"
+      :style="{ width: '40vw', heigth: '60vh' }"
+    >
+      <div>
+        <label
+          >Título:
+          <InputText type="text" v-model="itemDetail.title" disabled />
+        </label>
+        <label
+          >Código:
+          <InputText type="text" v-model="itemDetail.code" disabled />
+        </label>
+        <label
+          >Categoria:
+          <InputText type="text" v-model="itemDetail.category" disabled />
+        </label>
+        <label
+          >Marca:
+          <InputText type="text" v-model="itemDetail.brand" disabled />
+        </label>
+        <label
+          >Modelo:
+          <InputText type="text" v-model="itemDetail.model" disabled />
+        </label>
+        <label
+          >Descrição:
+          <InputText type="text" v-model="itemDetail.description" disabled />
+        </label>
+        <label>
+          URL imagem:
+          <InputText type="text" v-model="itemDetail.url_image" disabled />
+        </label>
+      </div>
+      <template #footer>
+        <Button
+          label="Cancelar"
+          icon="pi pi-times"
+          @click="showModal = false"
+        />
+
+        <Button
+          label="Editar"
+          icon="pi pi-pencil"
+          @click="closeResponsive"
+          autofocus
+        />
+      </template>
+    </Dialog>
   </div>
 </template>
 <style scoped>
@@ -94,6 +151,9 @@ onMounted(() => {
   font-weight: bold;
 }
 
+.detail-dialog {
+  display: flex;
+}
 .card p {
   color: gray;
 }
