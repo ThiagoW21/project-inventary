@@ -30,13 +30,37 @@ onMounted(() => {
             <p>{{ item.brand }}</p>
             <h1>{{ item.model }}</h1>
           </div>
-          <div class="status">{{ item.borrowed_to }}</div>
+          <div
+            class="status"
+            :class="{ borrowed: item.borrowed_to !== 'Na empresa' }"
+          >
+            {{ item.borrowed_to }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+.status {
+  border-radius: 4px;
+  background-color: #46b968;
+  height: 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.card p {
+  color: gray;
+}
+
+.borrowed {
+  background-color: #f9a825;
+}
+
 #itens-container {
   width: 100%;
   display: flex;
@@ -58,6 +82,9 @@ onMounted(() => {
   flex-grow: unset;
   margin: 19px;
   transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card:hover {
