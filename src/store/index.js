@@ -13,6 +13,8 @@ const store = createStore({
     items: [],
     backupItems: [],
     borrowedItems: [],
+    item: {},
+    resetForm: false,
   },
   getters: {
     isLoading(state) {
@@ -42,6 +44,12 @@ const store = createStore({
     borrowedItems(state) {
       return state.borrowedItems;
     },
+    item(state) {
+      return state.item;
+    },
+    resetForm(state) {
+      return state.resetForm;
+    },
   },
   mutations: {
     LOGGED_USER(state, payload) {
@@ -70,6 +78,13 @@ const store = createStore({
     },
     REMOVE_FILTER(state) {
       state.items = state.backupItems;
+    },
+    SET_ITEM(state, payload) {
+      state.item = payload;
+    },
+    RESET_FORM(state) {
+      state.resetForm = !state.resetForm;
+      state.item = false;
     },
   },
   actions: {

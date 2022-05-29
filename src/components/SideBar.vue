@@ -26,7 +26,7 @@ function handleClick() {
     <div id="buttons-nav-container">
       <div class="generic-label">
         <p v-if="!minimized">Geral</p>
-        <RouterLink to="/inventario">
+        <RouterLink to="/home/inventario">
           <Button
             :label="!minimized && 'Inventário'"
             class="p-button-outlined p-button-secondary"
@@ -59,7 +59,7 @@ function handleClick() {
       </div>
       <div class="generic-label">
         <p v-if="!minimized">Produtos</p>
-        <RouterLink to="/produtos/cadastrar">
+        <RouterLink to="/home/items/cadastro">
           <Button
             :label="!minimized && 'Cadastrar'"
             class="p-button-outlined p-button-secondary"

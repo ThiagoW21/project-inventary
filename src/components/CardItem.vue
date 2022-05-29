@@ -1,10 +1,10 @@
 <script setup>
 defineProps({
-  url: {
+  title: {
     type: String,
     required: true,
   },
-  description: {
+  url: {
     type: String,
     required: true,
   },
@@ -22,13 +22,12 @@ defineProps({
   },
 });
 
-const emit = defineEmits(["show-detail"])
-
+const emit = defineEmits(["show-detail"]);
 </script>
 <template>
   <div class="card" @click="emit('show-detail')">
     <img :src="url" />
-    <h3>{{ description }}</h3>
+    <h3>{{ title }}</h3>
     <div class="brand-model-container">
       <p>{{ brand }}</p>
       <h1>{{ model }}</h1>

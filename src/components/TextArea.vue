@@ -1,12 +1,10 @@
 <script setup>
+import { computed } from "@vue/reactivity";
 import { useField } from "vee-validate";
-import { toRef, watch, computed } from "vue";
+import { toRef, watch } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
-  type: {
-    type: String,
-  },
   value: {
     type: String,
   },
@@ -38,20 +36,19 @@ watch(reset, () => {
 
 <template>
   <b-form-group
-    class="input"
     :id="`fieldset-${name}`"
     :label="label"
     label-for="input-1"
     :state="state"
   >
-    <b-form-input
-      :type="type"
+    <b-form-textarea
       :id="name"
       :name="name"
       :placeholder="placeholder"
       v-model="inputValue"
       :state="errorMessage && !errorMessage"
+      size="lg"
       trim
-    ></b-form-input>
+    ></b-form-textarea>
   </b-form-group>
 </template>

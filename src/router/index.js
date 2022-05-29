@@ -18,6 +18,11 @@ const router = createRouter({
           name: "inventario",
           component: () => import("../views/InventaryView.vue"),
         },
+        {
+          path: "/home/items/cadastro",
+          name: "Cadastro de item",
+          component: () => import("../views/CadastroItemView.vue"),
+        },
       ],
     },
   ],

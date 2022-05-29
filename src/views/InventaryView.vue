@@ -4,11 +4,13 @@ import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import InputText from "primevue/inputtext";
 import { computed, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import CardItem from "../components/CardItem.vue";
 import NavBar from "../components/NavBar.vue";
 import SystemStatistics from "../components/SystemStatistics.vue";
 
+const router = useRouter();
 const store = useStore();
 const items = computed(() => store.getters.items);
 const filters = ref([
@@ -43,6 +45,11 @@ function showDetail(item) {
 onMounted(() => {
   store.dispatch("getItens");
 });
+
+function editItem() {
+  store.commit("SET_ITEM", itemDetail);
+  router.push({ name: "Cadastro de item" });
+}
 </script>
 <template>
   <NavBar />
@@ -77,8 +84,8 @@ onMounted(() => {
         <CardItem
           v-for="item in items"
           :key="item.id"
+          :title="item.title"
           :url="item.url_image"
-          :description="item.description"
           :brand="item.brand"
           :model="item.model"
           :borrowed_to="item.borrowed_to"
@@ -121,6 +128,10 @@ onMounted(() => {
           URL imagem:
           <InputText type="text" v-model="itemDetail.url_image" disabled />
         </label>
+        <label>
+          Preço:
+          <InputText type="text" v-model="itemDetail.price" disabled />
+        </label>
       </div>
       <template #footer>
         <Button
@@ -132,7 +143,7 @@ onMounted(() => {
         <Button
           label="Editar"
           icon="pi pi-pencil"
-          @click="closeResponsive"
+          @click="editItem"
           autofocus
         />
       </template>

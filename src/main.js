@@ -14,6 +14,7 @@ import PrimeVue from "primevue/config";
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import { BToastPlugin } from "bootstrap-vue-3";
 
 const app = createApp(App);
 
@@ -24,5 +25,6 @@ app.use(MDialogPlugin);
 app.use(createVuestic());
 app.use(VueGravatar);
 app.use(PrimeVue);
+app.use(BToastPlugin);
 
 app.mount("#app");
