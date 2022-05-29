@@ -208,8 +208,7 @@ h1 {
 #fieldset-reference_point,
 #fieldset-tel,
 #fieldset-email,
-#fieldset-office,
-.input {
+#fieldset-office {
   display: flex;
   flex-direction: column;
   flex-grow: 4;

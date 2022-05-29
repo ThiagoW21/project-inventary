@@ -27,7 +27,7 @@ const { value: inputValue } = useField(name, undefined, {
 });
 
 watch(reset, () => {
-  value.value = "";
+  inputValue.value = "";
 });
 
 watch(value, () => {
