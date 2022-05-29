@@ -1,12 +1,12 @@
 <script setup>
 import Button from "primevue/button";
-import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import InputText from "primevue/inputtext";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import CardItem from "../components/CardItem.vue";
+import ItemDetail from "../components/ItemDetail.vue";
 import NavBar from "../components/NavBar.vue";
 import SystemStatistics from "../components/SystemStatistics.vue";
 
@@ -93,61 +93,11 @@ function editItem() {
         />
       </div>
     </div>
-    <Dialog
-      header="Detalhes"
-      v-model:visible="showModal"
-      :breakpoints="{ '960px': '75vw' }"
-      :style="{ width: '40vw', heigth: '60vh' }"
-    >
-      <div>
-        <label
-          >Título:
-          <InputText type="text" v-model="itemDetail.title" disabled />
-        </label>
-        <label
-          >Código:
-          <InputText type="text" v-model="itemDetail.code" disabled />
-        </label>
-        <label
-          >Categoria:
-          <InputText type="text" v-model="itemDetail.category" disabled />
-        </label>
-        <label
-          >Marca:
-          <InputText type="text" v-model="itemDetail.brand" disabled />
-        </label>
-        <label
-          >Modelo:
-          <InputText type="text" v-model="itemDetail.model" disabled />
-        </label>
-        <label
-          >Descrição:
-          <InputText type="text" v-model="itemDetail.description" disabled />
-        </label>
-        <label>
-          URL imagem:
-          <InputText type="text" v-model="itemDetail.url_image" disabled />
-        </label>
-        <label>
-          Preço:
-          <InputText type="text" v-model="itemDetail.price" disabled />
-        </label>
-      </div>
-      <template #footer>
-        <Button
-          label="Cancelar"
-          icon="pi pi-times"
-          @click="showModal = false"
-        />
-
-        <Button
-          label="Editar"
-          icon="pi pi-pencil"
-          @click="editItem"
-          autofocus
-        />
-      </template>
-    </Dialog>
+    <ItemDetail
+      :showModal="showModal"
+      :item="itemDetail"
+      @show-modal="showModal = false"
+    />
   </div>
 </template>
 <style scoped>

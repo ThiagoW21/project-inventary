@@ -24,7 +24,7 @@ const borrowedItems = computed(() => store.getters.borrowedItems.length);
         <va-icon name="widgets" size="4rem" :rotation="0" class="mr-3" />
         <h1>{{ items }}</h1>
       </div>
-      <h2>Items</h2>
+      <h2>Itens</h2>
     </div>
     <div class="card">
       <div class="value-container">
