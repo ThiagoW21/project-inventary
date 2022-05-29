@@ -1,6 +1,6 @@
 <script setup>
 import { useField } from "vee-validate";
-import { computed, ref, toRef, watch } from "vue";
+import { computed, toRef, watch } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
@@ -21,6 +21,10 @@ const props = defineProps({
   placeholder: {
     type: String,
   },
+  options: {
+    type: Array,
+    required: true,
+  },
 });
 
 const store = useStore();
@@ -34,14 +38,6 @@ const { value: inputValue, errorMessage } = useField(name, undefined, {
 watch(reset, () => {
   inputValue.value = "";
 });
-
-const areas = ref([
-  "Notebook",
-  "Computadores",
-  "Periféricos",
-  "Peças",
-  "Escritório",
-]);
 </script>
 
 <template>
@@ -55,7 +51,7 @@ const areas = ref([
       :id="name"
       :name="name"
       v-model="inputValue"
-      :options="areas"
+      :options="options"
       :state="errorMessage && !errorMessage"
     ></b-form-select>
   </b-form-group>

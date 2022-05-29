@@ -3,13 +3,13 @@ import axios from "axios";
 import { useToast } from "bootstrap-vue-3";
 import Button from "primevue/button";
 import { Form } from "vee-validate";
+import { computed, watch, ref } from "vue";
 import { useStore } from "vuex";
 import * as Yup from "yup";
 import DropDown from "../components/DropDown.vue";
 import NavBar from "../components/NavBar.vue";
 import TextArea from "../components/TextArea.vue";
 import TextInput from "../components/TextInput.vue";
-import { computed, watch, ref } from "vue";
 
 const store = useStore();
 const toast = useToast();
@@ -31,6 +31,7 @@ const item = computed(() => store.getters.item);
 
 async function onSubmit(values) {
   const url = "https://inventary-v1.herokuapp.com/items";
+
   store.commit("SET_LOADING");
 
   if (item.value.id) {
@@ -55,6 +56,14 @@ function resetForm() {
 watch(item, () => {
   console.log(item.value);
 });
+
+const options = ref([
+  "Notebook",
+  "Computadores",
+  "Periféricos",
+  "Peças",
+  "Escritório",
+]);
 </script>
 <template>
   <nav-bar />
@@ -87,6 +96,7 @@ watch(item, () => {
           type="text"
           label="Categoria:"
           :value="item && item.category"
+          :options="options"
           placeholder="Categoria do produto"
         />
       </div>

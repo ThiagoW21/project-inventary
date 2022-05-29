@@ -56,7 +56,7 @@ function editItem() {
   <div id="view-container">
     <div class="container">
       <SystemStatistics />
-      <div id="search-container">
+      <div class="search-container">
         <InputText placeholder="Buscar item" v-model="inputValue" />
         <Dropdown
           v-model="selectedFilter"
@@ -217,7 +217,7 @@ function editItem() {
   align-items: center;
 }
 
-#search-container {
+.search-container {
   width: 100%;
   padding: 20px;
   display: flex;

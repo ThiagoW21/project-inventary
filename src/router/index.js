@@ -23,6 +23,11 @@ const router = createRouter({
           name: "Cadastro de item",
           component: () => import("../views/CadastroItemView.vue"),
         },
+        {
+          path: "/home/items/emprestimo",
+          name: "Emprestimo de itens",
+          component: () => import("../views/ItemLoans.vue"),
+        },
       ],
     },
   ],

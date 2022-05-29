@@ -15,6 +15,7 @@ const store = createStore({
     borrowedItems: [],
     item: {},
     resetForm: false,
+    contribuitorsName: [],
   },
   getters: {
     isLoading(state) {
@@ -49,6 +50,9 @@ const store = createStore({
     },
     resetForm(state) {
       return state.resetForm;
+    },
+    contribuitorsName(state) {
+      return state.contribuitorsName;
     },
   },
   mutations: {
@@ -85,6 +89,12 @@ const store = createStore({
     RESET_FORM(state) {
       state.resetForm = !state.resetForm;
       state.item = false;
+    },
+    SET_CONTRIBUITORS(state, payload) {
+      state.contributors = payload;
+    },
+    SET_CONTRIBUITORS_NAMES(state, payload) {
+      state.contribuitorsName = payload;
     },
   },
   actions: {
@@ -136,6 +146,16 @@ const store = createStore({
     },
     removeFilter({ commit }) {
       commit("REMOVE_FILTER");
+    },
+    async getContribuitors({ commit }) {
+      commit("SET_LOADING");
+      const url = "https://inventary-v1.herokuapp.com/contributors";
+      await axios.get(url).then((res) => {
+        commit("SET_CONTRIBUITORS", res.data);
+        const contribuitorsNames = res.data.map((obj) => obj.full_name);
+        commit("SET_CONTRIBUITORS_NAMES", contribuitorsNames);
+      });
+      commit("SET_LOADING");
     },
   },
 });

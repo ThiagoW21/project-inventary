@@ -66,7 +66,7 @@ function handleClick() {
             icon="pi pi-plus"
           />
         </RouterLink>
-        <RouterLink to="/emprestimos">
+        <RouterLink to="/home/items/emprestimo">
           <Button
             :label="!minimized && 'Empréstimos'"
             class="p-button-outlined p-button-secondary emprestimo"
