@@ -28,6 +28,16 @@ const router = createRouter({
           name: "Emprestimo de itens",
           component: () => import("../views/ItemLoans.vue"),
         },
+        {
+          path: "/home/contribuitors/cadastro",
+          name: "Cadastro de colaboradores",
+          component: () => import("../views/RegisterColaborattor.vue"),
+        },
+        {
+          path: "/home/contribuitors/listar",
+          name: "Listagem de colaboradores",
+          component: () => import("../views/ContribuitorsList.vue"),
+        },
       ],
     },
   ],

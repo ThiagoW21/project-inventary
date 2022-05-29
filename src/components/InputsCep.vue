@@ -1,13 +1,9 @@
 <script setup>
-import axios from "axios";
 import { useField } from "vee-validate";
 import { computed, toRef, watch } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
-  type: {
-    type: String,
-  },
   value: {
     type: String,
   },
@@ -19,35 +15,24 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  placeholder: {
-    type: String,
-  },
-  disabled: {
-    type: Boolean,
-    required: false,
-  },
 });
 
 const store = useStore();
 const name = toRef(props, "name");
+const value = toRef(props, "value");
 const reset = computed(() => store.getters.resetForm);
 
-const { value: inputValue, errorMessage } = useField(name, undefined, {
+const { value: inputValue } = useField(name, undefined, {
   initialValue: props.value,
 });
 
 watch(reset, () => {
-  inputValue.value = "";
+  value.value = "";
 });
 
-function searchCep() {
-  if (name.value === "cep" && inputValue.value.length === 8) {
-    axios
-      .get(`https://viacep.com.br/ws/${inputValue.value}/json/`)
-      .then((res) => store.commit("SET_CEP", res.data))
-      .catch(() => store.commit("RESET_FORM"));
-  }
-}
+watch(value, () => {
+  inputValue.value = value.value;
+});
 </script>
 
 <template>
@@ -59,15 +44,11 @@ function searchCep() {
     :state="state"
   >
     <b-form-input
-      :type="type"
-      :id="name"
+      type="text"
       :name="name"
-      :placeholder="placeholder"
       v-model="inputValue"
-      :state="errorMessage && !errorMessage"
       trim
-      :disabled="disabled"
-      @keyup="searchCep"
+      disabled
     ></b-form-input>
   </b-form-group>
 </template>

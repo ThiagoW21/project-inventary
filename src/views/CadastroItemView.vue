@@ -3,7 +3,7 @@ import axios from "axios";
 import { useToast } from "bootstrap-vue-3";
 import Button from "primevue/button";
 import { Form } from "vee-validate";
-import { computed, watch, ref } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import * as Yup from "yup";
 import DropDown from "../components/DropDown.vue";
@@ -52,10 +52,6 @@ async function onSubmit(values) {
 function resetForm() {
   store.commit("RESET_FORM");
 }
-
-watch(item, () => {
-  console.log(item.value);
-});
 
 const options = ref([
   "Notebook",

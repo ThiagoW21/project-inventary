@@ -14,8 +14,10 @@ const store = createStore({
     backupItems: [],
     borrowedItems: [],
     item: {},
+    colaborattor: {},
     resetForm: false,
     contribuitorsName: [],
+    cep: {},
   },
   getters: {
     isLoading(state) {
@@ -42,11 +44,17 @@ const store = createStore({
     items(state) {
       return state.items;
     },
+    colaborattor(state) {
+      return state.colaborattor;
+    },
     borrowedItems(state) {
       return state.borrowedItems;
     },
     item(state) {
       return state.item;
+    },
+    cep(state) {
+      return state.cep;
     },
     resetForm(state) {
       return state.resetForm;
@@ -86,15 +94,22 @@ const store = createStore({
     SET_ITEM(state, payload) {
       state.item = payload;
     },
+    SET_COLABORATTOR(state, payload) {
+      state.colaborattor = payload;
+    },
     RESET_FORM(state) {
       state.resetForm = !state.resetForm;
       state.item = false;
+      state.colaborattor = false;
     },
     SET_CONTRIBUITORS(state, payload) {
       state.contributors = payload;
     },
     SET_CONTRIBUITORS_NAMES(state, payload) {
       state.contribuitorsName = payload;
+    },
+    SET_CEP(state, payload) {
+      state.cep = payload;
     },
   },
   actions: {
