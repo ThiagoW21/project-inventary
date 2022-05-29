@@ -20,7 +20,7 @@ const props = defineProps({
 const emit = defineEmits(["show-modal"]);
 
 const itemDetail = toRef(props, "item");
-console.log(itemDetail);
+
 const showModal = toRef(props, "showModal");
 const router = useRouter();
 const store = useStore();
@@ -88,5 +88,4 @@ function editItem() {
   flex-grow: 4;
   margin-right: 20px;
 }
-
 </style>

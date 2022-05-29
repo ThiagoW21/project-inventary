@@ -52,7 +52,7 @@ const store = createStore({
       return state.resetForm;
     },
     contribuitorsName(state) {
-      return state.contribuitorsName;
+      return [...state.contribuitorsName, "Na empresa"];
     },
   },
   mutations: {
