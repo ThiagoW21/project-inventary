@@ -40,8 +40,9 @@ function showDetail(item) {
   showModal.value = true;
 }
 
-onMounted(() => {
-  store.dispatch("getItens");
+onMounted(async () => {
+  await store.dispatch("getItens");
+  store.dispatch("getLoans");
 });
 </script>
 <template>

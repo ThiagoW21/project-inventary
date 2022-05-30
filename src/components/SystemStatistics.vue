@@ -8,6 +8,7 @@ const contribuitors = computed(() => store.getters.contribuitors.length);
 const totalProducts = computed(() => store.getters.totalProducts);
 const items = computed(() => store.getters.items.length);
 const borrowedItems = computed(() => store.getters.borrowedItems.length);
+const loans = computed(() => store.getters.getLoans);
 </script>
 <template>
   <h1>Estatísticas do sistema</h1>
@@ -41,7 +42,7 @@ const borrowedItems = computed(() => store.getters.borrowedItems.length);
           :rotation="0"
           class="mr-3"
         />
-        <h1>{{ borrowedItems }}</h1>
+        <h1>{{ loans }}</h1>
       </div>
       <h2>Empréstimos</h2>
     </div>

@@ -42,14 +42,14 @@ function handleClick() {
       </div>
       <div class="generic-label">
         <p v-if="!minimized">Colaboradores</p>
-        <RouterLink to="/colaboradores/cadastrar">
+        <RouterLink to="/home/contribuitors/cadastro">
           <Button
             :label="!minimized && 'Cadastrar'"
             class="p-button-outlined p-button-secondary"
             icon="pi pi-plus"
           />
         </RouterLink>
-        <RouterLink to="/colaboradores">
+        <RouterLink to="/home/contribuitors/listar">
           <Button
             :label="!minimized && 'Listar'"
             class="p-button-outlined p-button-secondary"
