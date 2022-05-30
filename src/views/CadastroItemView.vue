@@ -29,6 +29,10 @@ const schema = Yup.object().shape({
 
 const item = computed(() => store.getters.item);
 
+function resetForm() {
+  store.commit("RESET_FORM");
+}
+
 async function onSubmit(values) {
   const url = "https://inventary-v1.herokuapp.com/items";
 
@@ -40,6 +44,8 @@ async function onSubmit(values) {
     await axios.post(url, values);
   }
 
+  resetForm();
+
   store.commit("SET_LOADING");
 
   toast.show({
@@ -49,9 +55,7 @@ async function onSubmit(values) {
   });
 }
 
-function resetForm() {
-  store.commit("RESET_FORM");
-}
+
 
 const options = ref([
   "Notebook",

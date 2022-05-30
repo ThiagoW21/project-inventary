@@ -55,53 +55,60 @@ function handleClick() {
 </script>
 <template>
   <NavBar />
-  <div class="search-container">
-    <span class="p-float-label p-input-icon-left">
-      <i class="pi pi-search" />
-      <InputText v-model="inputValue" id="inputtext" />
-      <label for="inputtext">Digite o título do item</label>
-    </span>
+  <div id="view-container">
+    <div class="search-container">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-search" />
+        <InputText v-model="inputValue" id="inputtext" />
+        <label for="inputtext">Digite o título do item</label>
+      </span>
 
-    <Button
-      v-if="filterActive"
-      label="Remover filtro"
-      icon="pi pi-trash"
-      class="p-button-danger"
-      @click="handleClick"
-    />
-    <Button
-      v-else
-      type="button"
-      label="Buscar"
-      icon="pi pi-search"
-      @click="handleClick"
+      <Button
+        v-if="filterActive"
+        label="Remover filtro"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        @click="handleClick"
+      />
+      <Button
+        v-else
+        type="button"
+        label="Buscar"
+        icon="pi pi-search"
+        @click="handleClick"
+      />
+    </div>
+    <div>
+      <b-table striped hover :items="items" :fields="fields">
+        <template #cell(Emprestado)="row">
+          <DropDownLoansVue
+            :item="row.item.values"
+            :borrowed="row.item.borrowed"
+          />
+        </template>
+        <template #cell(Detalhes)="row">
+          <Button
+            type="button"
+            label="Mostrar"
+            @click="showDetail(row.item.values)"
+            class="p-button-secondary"
+          />
+        </template>
+      </b-table>
+    </div>
+    <ItemDetail
+      :showModal="showModal"
+      :item="itemDetail"
+      @show-modal="showModal = false"
     />
   </div>
-  <div>
-    <b-table striped hover :items="items" :fields="fields">
-      <template #cell(Emprestado)="row">
-        <DropDownLoansVue
-          :item="row.item.values"
-          :borrowed="row.item.borrowed"
-        />
-      </template>
-      <template #cell(Detalhes)="row">
-        <Button
-          type="button"
-          label="Mostrar"
-          @click="showDetail(row.item.values)"
-          class="p-button-secondary"
-        />
-      </template>
-    </b-table>
-  </div>
-  <ItemDetail
-    :showModal="showModal"
-    :item="itemDetail"
-    @show-modal="showModal = false"
-  />
 </template>
 <style scoped>
+#view-container {
+  overflow: auto;
+  padding-bottom: 100px;
+  height: 100%;
+}
 .form-select {
   height: 35px;
 }
