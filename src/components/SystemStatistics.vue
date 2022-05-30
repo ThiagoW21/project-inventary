@@ -7,7 +7,6 @@ const store = useStore();
 const contribuitors = computed(() => store.getters.contribuitors.length);
 const totalProducts = computed(() => store.getters.totalProducts);
 const items = computed(() => store.getters.items.length);
-const borrowedItems = computed(() => store.getters.borrowedItems.length);
 const loans = computed(() => store.getters.getLoans);
 </script>
 <template>

@@ -65,8 +65,8 @@ const store = createStore({
       return [...state.contribuitorsName, "Na empresa"];
     },
     getLoans(state) {
-      return state.loans
-    }
+      return state.loans;
+    },
   },
   mutations: {
     LOGGED_USER(state, payload) {

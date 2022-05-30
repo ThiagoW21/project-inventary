@@ -35,6 +35,10 @@ onMounted(() => {
       .catch(() => store.commit("RESET_FORM"));
 });
 
+function resetForm() {
+  store.commit("RESET_FORM");
+}
+
 async function onSubmit(values) {
   const url = "https://inventary-v1.herokuapp.com/contributors";
 
@@ -45,7 +49,7 @@ async function onSubmit(values) {
   } else {
     await axios.post(url, values);
   }
-
+  resetForm();
   store.commit("SET_LOADING");
 
   toast.show({
@@ -53,10 +57,6 @@ async function onSubmit(values) {
     body: "O produto foi registrado no banco de dados",
     delay: 3000,
   });
-}
-
-function resetForm() {
-  store.commit("RESET_FORM");
 }
 
 const optionsGender = ref(["Masculino", "Feminino"]);

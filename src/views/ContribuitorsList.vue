@@ -38,44 +38,46 @@ function handleClick() {
 </script>
 <template>
   <NavBar />
-  <div class="search-container">
-    <span class="p-float-label p-input-icon-left">
-      <i class="pi pi-search" />
-      <InputText v-model="inputValue" id="inputtext" />
-      <label for="inputtext">Digite o nome do colaborador</label>
-    </span>
+  <div id="view-container">
+    <div class="search-container">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-search" />
+        <InputText v-model="inputValue" id="inputtext" />
+        <label for="inputtext">Digite o nome do colaborador</label>
+      </span>
 
-    <Button
-      v-if="filterActive"
-      label="Remover filtro"
-      icon="pi pi-trash"
-      class="p-button-danger"
-      @click="handleClick"
-    />
-    <Button
-      v-else
-      type="button"
-      label="Buscar"
-      icon="pi pi-search"
-      @click="handleClick"
+      <Button
+        v-if="filterActive"
+        label="Remover filtro"
+        icon="pi pi-trash"
+        class="p-button-danger"
+        @click="handleClick"
+      />
+      <Button
+        v-else
+        type="button"
+        label="Buscar"
+        icon="pi pi-search"
+        @click="handleClick"
+      />
+    </div>
+    <div class="cards-container">
+      <CardColaborattor
+        v-for="colab in contribuitors"
+        @show-detail="showDetail(colab)"
+        :name="colab.full_name"
+        :email="colab.email"
+        :tel="colab.tel"
+        :office="colab.office"
+        :key="colab.id"
+      />
+    </div>
+    <ColaborattorDetail
+      :showModal="showModal"
+      :contribuitor="contribuitorDetail"
+      @show-modal="showModal = false"
     />
   </div>
-  <div class="cards-container">
-    <CardColaborattor
-      v-for="colab in contribuitors"
-      @show-detail="showDetail(colab)"
-      :name="colab.full_name"
-      :email="colab.email"
-      :tel="colab.tel"
-      :office="colab.office"
-      :key="colab.id"
-    />
-  </div>
-  <ColaborattorDetail
-    :showModal="showModal"
-    :contribuitor="contribuitorDetail"
-    @show-modal="showModal = false"
-  />
 </template>
 <style scoped>
 .search-container {
@@ -93,6 +95,11 @@ function handleClick() {
   justify-content: center;
 }
 
+#view-container {
+  overflow: auto;
+  padding-bottom: 100px;
+  height: 100%;
+}
 .p-inputtext,
 .p-float-label {
   display: flex;

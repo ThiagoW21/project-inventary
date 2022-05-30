@@ -42,6 +42,7 @@ function showDetail(item) {
 
 onMounted(async () => {
   await store.dispatch("getItens");
+  await store.dispatch("getContribuitors");
   store.dispatch("getLoans");
 });
 </script>
