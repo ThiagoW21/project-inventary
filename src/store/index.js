@@ -18,6 +18,8 @@ const store = createStore({
     resetForm: false,
     contribuitorsName: [],
     cep: {},
+    backupContribuitors: [],
+    loans: 0,
   },
   getters: {
     isLoading(state) {
@@ -62,6 +64,9 @@ const store = createStore({
     contribuitorsName(state) {
       return [...state.contribuitorsName, "Na empresa"];
     },
+    getLoans(state) {
+      return state.loans
+    }
   },
   mutations: {
     LOGGED_USER(state, payload) {
@@ -88,8 +93,12 @@ const store = createStore({
     SET_BACKUP(state, payload) {
       state.backupItems = payload;
     },
+    SET_BACKUP_CONTRIBUITORS(state, payload) {
+      state.backupContribuitors = payload;
+    },
     REMOVE_FILTER(state) {
       state.items = state.backupItems;
+      state.contributors = state.backupContribuitors;
     },
     SET_ITEM(state, payload) {
       state.item = payload;
@@ -110,6 +119,9 @@ const store = createStore({
     },
     SET_CEP(state, payload) {
       state.cep = payload;
+    },
+    SET_LOANS(state, payload) {
+      state.loans = payload;
     },
   },
   actions: {
@@ -159,6 +171,12 @@ const store = createStore({
       );
       commit("ADD_ITEMS", itemsFiltered);
     },
+    filterContribuitors({ commit, state }, { key, value }) {
+      const contribuitorsFiltered = state.contributors.filter((colab) =>
+        colab[key].toLowerCase().includes(value.toLowerCase())
+      );
+      commit("SET_CONTRIBUITORS", contribuitorsFiltered);
+    },
     removeFilter({ commit }) {
       commit("REMOVE_FILTER");
     },
@@ -167,10 +185,17 @@ const store = createStore({
       const url = "https://inventary-v1.herokuapp.com/contributors";
       await axios.get(url).then((res) => {
         commit("SET_CONTRIBUITORS", res.data);
+        commit("SET_BACKUP_CONTRIBUITORS", res.data);
         const contribuitorsNames = res.data.map((obj) => obj.full_name);
         commit("SET_CONTRIBUITORS_NAMES", contribuitorsNames);
       });
       commit("SET_LOADING");
+    },
+    getLoans({ commit, state }) {
+      const loans = state.items.filter(
+        (colab) => colab.borrowed_to !== "Na empresa"
+      );
+      commit("SET_LOANS", loans.length);
     },
   },
 });

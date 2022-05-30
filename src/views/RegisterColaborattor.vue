@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useToast } from "bootstrap-vue-3";
 import Button from "primevue/button";
-import { Form, Field } from "vee-validate";
+import { Form } from "vee-validate";
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import * as Yup from "yup";
