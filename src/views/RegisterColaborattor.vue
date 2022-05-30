@@ -49,7 +49,7 @@ async function onSubmit(values) {
   } else {
     await axios.post(url, values);
   }
-  resetForm();
+
   store.commit("SET_LOADING");
 
   toast.show({
