@@ -55,8 +55,6 @@ async function onSubmit(values) {
   });
 }
 
-
-
 const options = ref([
   "Notebook",
   "Computadores",
