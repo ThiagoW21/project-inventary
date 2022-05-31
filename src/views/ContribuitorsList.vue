@@ -5,7 +5,6 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import CardColaborattor from "../components/CardColaborattor.vue";
 import ColaborattorDetail from "../components/ColaborattorDetail.vue";
-import NavBar from "../components/NavBar.vue";
 
 const store = useStore();
 onMounted(async () => {
@@ -37,7 +36,6 @@ function handleClick() {
 }
 </script>
 <template>
-  <NavBar />
   <div id="view-container">
     <div class="search-container">
       <span class="p-float-label p-input-icon-left">

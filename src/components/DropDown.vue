@@ -1,7 +1,6 @@
 <script setup>
 import { useField } from "vee-validate";
-import { computed, toRef, watch } from "vue";
-import { useStore } from "vuex";
+import { toRef, watch } from "vue";
 
 const props = defineProps({
   type: {
@@ -25,18 +24,26 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  reset: {
+    type: Boolean,
+    required: true,
+  },
 });
 
-const store = useStore();
 const name = toRef(props, "name");
-const reset = computed(() => store.getters.resetForm);
+const reset = toRef(props, "reset");
+const value = toRef(props, "value");
 
 const { value: inputValue, errorMessage } = useField(name, undefined, {
   initialValue: props.value,
 });
 
+watch(value, () => {
+  inputValue.value = value.value;
+});
+
 watch(reset, () => {
-  inputValue.value = "";
+  inputValue.value = undefined;
 });
 </script>
 

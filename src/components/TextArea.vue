@@ -1,8 +1,6 @@
 <script setup>
-import { computed } from "@vue/reactivity";
 import { useField } from "vee-validate";
 import { toRef, watch } from "vue";
-import { useStore } from "vuex";
 
 const props = defineProps({
   value: {
@@ -19,11 +17,15 @@ const props = defineProps({
   placeholder: {
     type: String,
   },
+  reset: {
+    type: String,
+    required: true,
+  },
 });
 
-const store = useStore();
 const name = toRef(props, "name");
-const reset = computed(() => store.getters.resetForm);
+const reset = toRef(props, "reset");
+const value = toRef(props, "value");
 
 const { value: inputValue, errorMessage } = useField(name, undefined, {
   initialValue: props.value,
@@ -31,6 +33,10 @@ const { value: inputValue, errorMessage } = useField(name, undefined, {
 
 watch(reset, () => {
   inputValue.value = "";
+});
+
+watch(value, () => {
+  inputValue.value = value.value;
 });
 </script>
 

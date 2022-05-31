@@ -6,7 +6,6 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import CardItem from "../components/CardItem.vue";
 import ItemDetail from "../components/ItemDetail.vue";
-import NavBar from "../components/NavBar.vue";
 import SystemStatistics from "../components/SystemStatistics.vue";
 
 const store = useStore();
@@ -44,10 +43,10 @@ onMounted(async () => {
   await store.dispatch("getItens");
   await store.dispatch("getContribuitors");
   store.dispatch("getLoans");
+  store.commit("RESET_FORM");
 });
 </script>
 <template>
-  <NavBar />
   <div id="view-container">
     <div class="container">
       <SystemStatistics />

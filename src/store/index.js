@@ -107,9 +107,7 @@ const store = createStore({
       state.colaborattor = payload;
     },
     RESET_FORM(state) {
-      state.resetForm = !state.resetForm;
-      state.item = false;
-      state.colaborattor = false;
+      state.cep = {};
     },
     SET_CONTRIBUITORS(state, payload) {
       state.contributors = payload;

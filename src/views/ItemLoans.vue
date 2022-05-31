@@ -5,7 +5,6 @@ import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import DropDownLoansVue from "../components/DropDownLoans.vue";
 import ItemDetail from "../components/ItemDetail.vue";
-import NavBar from "../components/NavBar.vue";
 
 const store = useStore();
 onMounted(async () => {
@@ -54,7 +53,6 @@ function handleClick() {
 }
 </script>
 <template>
-  <NavBar />
   <div id="view-container">
     <div class="search-container">
       <span class="p-float-label p-input-icon-left">

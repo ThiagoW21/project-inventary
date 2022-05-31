@@ -27,7 +27,10 @@ const store = useStore();
 
 function editItem() {
   store.commit("SET_ITEM", itemDetail);
-  router.push({ name: "Cadastro de item" });
+  router.push({
+    name: "Cadastro de item",
+    params: { id: itemDetail.value.id },
+  });
 }
 </script>
 <template>

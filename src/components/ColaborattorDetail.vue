@@ -4,7 +4,6 @@ import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 import { toRef } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 
 const props = defineProps({
   contribuitor: {
@@ -23,11 +22,12 @@ const contribuitor = toRef(props, "contribuitor");
 
 const showModal = toRef(props, "showModal");
 const router = useRouter();
-const store = useStore();
 
 function editColaborattor() {
-  store.commit("SET_COLABORATTOR", contribuitor);
-  router.push({ name: "Cadastro de colaboradores" });
+  router.push({
+    name: "Cadastro de colaboradores",
+    params: { id: contribuitor.value.id },
+  });
 }
 </script>
 <template>

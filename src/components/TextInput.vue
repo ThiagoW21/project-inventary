@@ -1,7 +1,7 @@
 <script setup>
 import axios from "axios";
 import { useField } from "vee-validate";
-import { computed, toRef, watch } from "vue";
+import { toRef, watch } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
@@ -26,26 +26,34 @@ const props = defineProps({
     type: Boolean,
     required: false,
   },
+  reset: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const store = useStore();
 const name = toRef(props, "name");
-const reset = computed(() => store.getters.resetForm);
+const value = toRef(props, "value");
+const reset = toRef(props, "reset");
 
 const { value: inputValue, errorMessage } = useField(name, undefined, {
   initialValue: props.value,
 });
 
 watch(reset, () => {
-  inputValue.value = "";
+  inputValue.value = undefined;
+});
+
+watch(value, () => {
+  inputValue.value = value.value;
 });
 
 function searchCep() {
   if (name.value === "cep" && inputValue.value.length === 8) {
     axios
       .get(`https://viacep.com.br/ws/${inputValue.value}/json/`)
-      .then((res) => store.commit("SET_CEP", res.data))
-      .catch(() => store.commit("RESET_FORM"));
+      .then((res) => store.commit("SET_CEP", res.data));
   }
 }
 </script>

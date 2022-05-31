@@ -3,11 +3,11 @@ import axios from "axios";
 import { useToast } from "bootstrap-vue-3";
 import Button from "primevue/button";
 import { Form } from "vee-validate";
-import { computed, ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import * as Yup from "yup";
 import DropDown from "../components/DropDown.vue";
-import NavBar from "../components/NavBar.vue";
 import TextArea from "../components/TextArea.vue";
 import TextInput from "../components/TextInput.vue";
 
@@ -27,26 +27,38 @@ const schema = Yup.object().shape({
   price: Yup.string().required("Preço um campo obrigatório"),
 });
 
-const item = computed(() => store.getters.item);
+const item = ref();
+const reset = ref(false);
+
+const params = useRoute();
 
 function resetForm() {
+  reset.value = !reset.value;
   store.commit("RESET_FORM");
+  item.value = {};
 }
+
+onMounted(async () => {
+  if (params.params.id) {
+    const url = `https://inventary-v1.herokuapp.com/items/${params.params.id}`;
+    await axios.get(url).then((res) => (item.value = res.data.Item));
+  }
+});
 
 async function onSubmit(values) {
   const url = "https://inventary-v1.herokuapp.com/items";
 
   store.commit("SET_LOADING");
 
-  if (item.value.id) {
+  if (params.params.id) {
     await axios.put(url + `/${item.value.id}`, values);
   } else {
     await axios.post(url, values);
   }
 
-  resetForm();
-
   store.commit("SET_LOADING");
+
+  resetForm();
 
   toast.show({
     title: "Tudo certo!",
@@ -64,7 +76,6 @@ const options = ref([
 ]);
 </script>
 <template>
-  <nav-bar />
   <b-container
     :toast="{ root: true }"
     fluid="sm"
@@ -96,6 +107,7 @@ const options = ref([
           :value="item && item.category"
           :options="options"
           placeholder="Categoria do produto"
+          :reset="reset"
         />
       </div>
       <h1>Dados complementares</h1>
