@@ -129,7 +129,7 @@ const store = createStore({
       delete payload["confirm_password"];
       commit("SET_LOADING");
       await axios
-        .post("http://inventary-v1.herokuapp.com/users", payload)
+        .post("https://inventary-v1.herokuapp.com/users", payload)
         .then((res) => commit("ADD_USER", res.data))
         .then(() => commit("EMAIL_UNREGISTERED"))
         .catch(() => commit("EMAIL_REGISTERED"));
@@ -138,7 +138,7 @@ const store = createStore({
     async authLogin({ commit }, payload) {
       commit("SET_LOADING");
       await axios
-        .post("http://inventary-v1.herokuapp.com/token", payload)
+        .post("https://inventary-v1.herokuapp.com/token", payload)
         .then((res) => {
           localStorage.setItem("user", JSON.stringify(res.data));
           commit("LOGGED_USER", res.data);
@@ -158,7 +158,7 @@ const store = createStore({
     },
     async getItens({ commit }) {
       commit("SET_LOADING");
-      const url = "http://inventary-v1.herokuapp.com/items";
+      const url = "https://inventary-v1.herokuapp.com/items";
       await axios.get(url).then((res) => {
         commit("ADD_ITEMS", res.data);
         commit("SET_BACKUP", res.data);

@@ -45,7 +45,7 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const token = JSON.parse(localStorage.getItem("user"));
-  const url = "http://inventary-v1.herokuapp.com/me";
+  const url = "https://inventary-v1.herokuapp.com/me";
 
   if (token) {
     const config = {
